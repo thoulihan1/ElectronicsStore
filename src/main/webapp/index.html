@@ -1,0 +1,178 @@
+<html>
+<head>
+    <title>RoutingDemo App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js"></script>
+    <script src="js/exam1.js"></script>
+    <script src="js/LoginController.js"></script>
+    <script src="js/RegisterController.js"></script>
+    <script src="js/CatalogController.js"></script>
+    <script src="js/LogoutController.js"></script>
+    <script src="js/CartController.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body ng-app='app'>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar">wer</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Brand</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#/login">Login</a></li>
+                <li><a href="#/register">Register</a></li>
+                <li><a href="#/catalog">Catalog</a></li>
+                <li><a href="#/admin">Admin</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right" >
+                <li class="dropdown" ng-show="loggedInUser!=null">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{loggedInUser}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="#/cart">Cart</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#/logout">Log Out</a></li>
+                    </ul>
+                </li>
+                <li ng-show="loggedInUser==null"><a href="#/login">Login</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div ng-view>
+
+</div>
+
+</body>
+</html>
+
+
+<!--
+<!doctype html>
+<html ng-app="app1">
+<div ng-controller="ctrl1">
+    You are logged in as {{loggedInName}} (User {{loggedInId}})
+    <center><h1>Login</h1>
+
+    <input type="text" ng-model="username" placeholder="username"/><br>
+    <input type="text" ng-model="password" placeholder="password"/>
+    <br>
+    <button ng-click="login()">Login</button>
+    <br>
+        {{result}}
+
+    </center>
+    <hr>
+    <center>
+    <H1>Register</H1>
+    <input type="text" ng-model="createUsername" placeholder="username"/><br>
+        <input type="text" ng-model="createPassword" placeholder="password"/>
+        <br>
+        <button ng-click="register()">Login</button>
+        <br>
+        {{msg}}
+    </center>
+<hr>
+    <button ng-click="getAllProducts()">All Products</button>
+
+    <ol>
+        <li ng-repeat = "stockItem in stockItems">
+            {{stockItem.title}},{{stockItem.manufacturer.name}},${{stockItem.price}},{{stockItem.leftInStock}}
+        </li>
+    </ol>
+
+    <select ng-model="selectedManufacturer"
+            ng-options="item.id as item.name for item in manufacturers">
+        <option value="">Select Manufacturer</option>
+    </select>
+
+
+    <button ng-click="manufacturersProducts(selectedManufacturer)">Show</button>
+    <br><br>
+
+    <table border="1" width="80%">
+        <tr>
+            <td>Manufacturer</td>
+            <td>Title</td>
+            <td>Price</td>
+            <td>In Stock</td>
+        </tr>
+    <tr ng-repeat = "stockItem in manProds">
+        <td>{{stockItem.manufacturer.name}}</td>
+        <td>{{stockItem.title}}</td>
+        <td>{{stockItem.price}}</td>
+        <td>{{stockItem.leftInStock}}</td>
+        <td ng-show="stockItem.leftInStock == 0"><button disabled>Out Of Stock</button></td>
+        <td ng-show="stockItem.leftInStock > 0">
+            <input type="number" ng-model="quant"/>
+
+            <button ng-click="addItemToCart(stockItem.id, quant)">Add to Cart</button>
+        </td>
+        {{boits}}
+    </tr>
+    </table>
+    <ol>
+        <li ng-repeat = "stockItem in manProds">
+            {{stockItem.manufacturer.name}} - {{stockItem.title}}. ${{stockItem.price}} - {{stockItem.leftInStock}} left in stock.
+        </li>
+    </ol>
+<hr>
+    <h3>Add Manufacturer</h3>
+    <input type="text" ng-model="newManufacturer" placeholder="Manufacturer name"/><br>
+    <br>
+    <button ng-click="addManufacturer()">Create</button>
+    <br>
+<hr>
+
+    <h3>Add Product</h3>
+    <input type="text" ng-model="title" placeholder="Title"/><br>
+    <input type="text" ng-model="price" placeholder="Price"/><br>
+    <select ng-model="manufacturerNewProduct"
+            ng-options="item.id as item.name for item in manufacturers">
+        <option value="">Manufacturer</option>
+    </select><br>
+    <input type="text" ng-model="category" placeholder="category"/><br>
+    <br>
+<button ng-click="addProduct(title, manufacturerNewProduct, price)">Add</button>
+
+    <hr>
+
+    <h3>Cart</h3>
+    <button ng-click="clearCart()">Clear Cart</button>
+
+    Total Price: {{totalCartPrice}}
+    <table border="1" width="80%">
+        <tr>
+            <td>Product</td>
+            <td>Price</td>
+            <td>Quantity</td>
+        </tr>
+        <tr ng-repeat = "cartItem in cartItems">
+            <td>{{cartItem.stockItem.title}}</td>
+            <td>{{cartItem.stockItem.price}}</td>
+            <td>{{cartItem.quantity}}</td>
+        </tr>
+    </table>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+
+<script src="js/exam1.js"></script>
+</body>
+</html>
+-->

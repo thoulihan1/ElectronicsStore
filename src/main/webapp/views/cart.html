@@ -1,0 +1,24 @@
+<h3>Cart</h3>
+
+<table  class="table" width="60%">
+    <thead class="thead-inverse">
+    <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tr ng-repeat = "cartItem in cartItems">
+        <td>{{cartItem.stockItem.title}}</td>
+        <td>{{cartItem.stockItem.price}}</td>
+        <td>{{cartItem.quantity}}</td>
+        <td><a href="#"><span class="glyphicon glyphicon-trash"></span></a></td>
+    </tr>
+</table>
+
+Total Price: {{totalCartPrice}}
+
+<br>
+
+<button ng-click="clearCart()">Clear Cart</button>
+

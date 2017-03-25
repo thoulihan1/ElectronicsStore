@@ -1,0 +1,44 @@
+<div>
+<button ng-click="getAllProducts()" class="btn btn-primary">All Products</button>
+
+<ol>
+    <li ng-repeat = "stockItem in stockItems">
+        {{stockItem.title}},{{stockItem.manufacturer.name}},${{stockItem.price}},{{stockItem.leftInStock}}
+    </li>
+</ol>
+
+<select ng-model="selectedManufacturer"
+        ng-options="item.id as item.name for item in manufacturers">
+    <option value="">Select Manufacturer</option>
+</select>
+
+
+<button ng-click="manufacturersProducts(selectedManufacturer)">Show</button>
+<br><br>
+
+<table class="table" border="1" width="80%">
+    <thead>
+    <tr>
+        <td>Image</td>
+        <td>Title</td>
+        <td>Manufacturer</td>
+        <td>Price</td>
+        <td>In Stock</td>
+    </tr>
+    </thead>
+    <tr ng-repeat = "stockItem in manProds">
+        <td><img height="50" ng-src="{{stockItem.imgUrl}}"/></td>
+        <td>{{stockItem.title}}</td>
+        <td>{{stockItem.manufacturer.name}}</td>
+        <td>{{stockItem.price}}</td>
+        <td>{{stockItem.leftInStock}}</td>
+        <td ng-show="stockItem.leftInStock == 0"><button disabled>Out Of Stock</button></td>
+        <td ng-show="stockItem.leftInStock > 0">
+            <input type="number" ng-model="quant"/>
+            <button ng-click="addItemToCart(stockItem.id, quant)">Add to Cart</button>
+        </td>
+        {{boits}}
+    </tr>
+</table>
+<hr>
+</div>
