@@ -1,5 +1,5 @@
 /**
- * Created by Thomas on 3/25/17.
+ * Created by Thomas on 3/20/17.
  */
 
 /**
@@ -8,8 +8,6 @@
 
 angular.module('app').controller("CatalogController", function ($scope,$http, $window) {
 
-    // var username;
-    // var password;
     $http.get('/newjersey/rest/store/manufacturers')
         .then(function(response){
             $scope.manufacturers = response.data;

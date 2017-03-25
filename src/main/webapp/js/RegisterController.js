@@ -1,11 +1,9 @@
 /**
- * Created by Thomas on 3/25/17.
+ * Created by Thomas on 3/20/17.
  */
 
 angular.module('app').controller("RegisterController", function ($scope,$http, $location) {
 
-    // var username;
-    // var password;
 
     $scope.register = function() {
         $scope.user = {
