@@ -12,6 +12,10 @@
                     templateUrl: 'views/login.html',
                     controller : "LoginController"
                 })
+                .when('/welcome', {
+                    templateUrl: 'views/welcome.html',
+                    controller : "LoginController"
+                })
                 .when('/logout', {
                     templateUrl: 'views/logout.html',
                     controller : "LogoutController"
@@ -27,6 +31,10 @@
                 .when('/cart',{
                     templateUrl: 'views/cart.html',
                     controller : "CartController"
+                })
+                .when('/admin',{
+                    templateUrl: 'views/admin.html',
+                    controller : "AdminController"
                 })
                 .otherwise({redirectTo:'/'});
         }]);
@@ -122,30 +130,8 @@ app1.controller('ctrl1', function($scope, $http) {
     }
 
 
-    $scope.newManufacturer=1;
 
-    $scope.addManufacturer = function(){
 
-     var manufacturerToCreate = {
-            name: $scope.newManufacturer,
-        };
-
-        $http({
-            method: 'POST',
-            url: '/newjersey/rest/store/manufacturers/',
-            data: manufacturerToCreate,
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }).then(function (result) {
-            console.log(result);
-            $scope.msg = "Congratulations " + manufacturerToCreate.name + ", you have registered successfully!";
-        }, function (error) {
-            console.log(error);
-            $scope.msg = "err0r - " + error;
-        });
-    }
 
     $scope.addProduct = function(newTitle, newManufacturerId, newPrice){
 

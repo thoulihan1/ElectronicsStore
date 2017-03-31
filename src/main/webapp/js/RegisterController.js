@@ -2,7 +2,8 @@
  * Created by Thomas on 3/20/17.
  */
 
-angular.module('app').controller("RegisterController", function ($scope,$http, $location) {
+angular.module('app').controller("RegisterController", function ($scope,$http) {
+
 
 
     $scope.register = function() {
@@ -15,7 +16,7 @@ angular.module('app').controller("RegisterController", function ($scope,$http, $
 
         $http({
             method: 'POST',
-            url: '/newjersey/rest/store/users/',
+            url: '/newjersey/rest/customers/add/',
             data: $scope.json,
             headers: {
                 'Content-Type': 'application/json',
@@ -26,7 +27,7 @@ angular.module('app').controller("RegisterController", function ($scope,$http, $
             $scope.msg = "Congratulations " + $scope.user.name + ", you have registered successfully!";
         }, function (error) {
             console.log(error);
-            $scope.msg = "err0r - " + error;
+            $scope.msg = "erggr0r - " + error;
         });
     }
 });

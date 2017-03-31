@@ -3,37 +3,23 @@ package groupid.model;
 import javax.persistence.*;
 
 /**
- * Created by Thomas o
- *n 3/13/17.
+ * Created by Thomas on 3/13/17.
  */
 
-@NamedQueries( {
-        @NamedQuery(name = "User.getAll", query = "select o from User o"),
-        @NamedQuery(name = "User.getById", query = "select o from User o where o.id=:id"),
-        @NamedQuery(name = "User.getByUsernameAndPassword", query = "select o from User o where o.name=:name AND o.password=:password"),
-})
-@Entity
+
+@MappedSuperclass
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    protected int id;
 
     private String name;
     private String password;
-
-    @OneToOne
-    private Cart cart;
+    private String email;
+    private String type;
 
     public User() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -52,11 +38,19 @@ public class User {
         this.password = password;
     }
 
-    public Cart getCart() {
-        return cart;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -11,7 +11,23 @@ import java.util.List;
 
 @Path("/store")
 public class Hello {
+    Gson gson = new Gson();
 
+
+    @GET
+    @Path("/login")
+    public Response login(@QueryParam("email") String email, @QueryParam("password") String password) {
+        User u = UserDAO.getUserByEmailAndPassword(email, password);
+        if (u != null) {
+            String json = gson.toJson(u);
+            return Response.status(200).entity(json).build();
+        } else {
+            return Response.status(401).build();
+        }
+    }
+}
+
+       /*
     @POST
     @Path("/users")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -27,32 +43,9 @@ public class Hello {
         return Response.status(200).build();
     }
 
-    @GET
-    @Path("/login")
-    public String login(@QueryParam("username")String username, @QueryParam("password")String password) {
-        User u;
-        Gson gson = new Gson();
-        try {
-             u = UserDAO.getUserByUsernameAndPassword(username, password);
 
-        } catch(Exception e){
-            return null;
-        }
 
-        String json = gson.toJson(u);
-        return json;
-    }
 
-    @GET
-    @Path("/products")
-    public String getAllProducts() {
-        List<StockItem> allStockItems = StockItemDAO.getAllStockItems();
-
-        Gson gson = new Gson();
-
-        String json = gson.toJson(allStockItems);
-        return json;
-    }
 
     @GET
     @Path("/manufacturers")
@@ -64,29 +57,10 @@ public class Hello {
         return json;
     }
 
-    @GET
-    @Path("/manufacturers/{id}")
-    public String getManufacturerById(@PathParam("id")String id) {
-        Manufacturer m = ManufacturerDAO.getManufacturerById(id);
-
-        List<StockItem> stockItems = StockItemDAO.getStockItemByManufacturer(m);
-        Gson gson = new Gson();
-
-        String json = gson.toJson(stockItems);
-        return json;
-    }
 
 
-    @GET
-    @Path("/users/{id}/cart")
-    public String getUsersCart(@PathParam("id")String id) {
-        User u = UserDAO.getUserById(Integer.parseInt(id));
-        Cart cart = u.getCart();
-        List<CartItem> cartItems = CartItemDAO.getCartItemsByCart(cart);
-        Gson gson = new Gson();
-        String json = gson.toJson(cartItems);
-        return json;
-    }
+
+
 
 
     @POST
@@ -117,37 +91,7 @@ public class Hello {
     }
 
 
-    @POST
-    @Path("/products/{id}/add_to_cart")
-    public Response addItemToCart(@PathParam("id")String id, @QueryParam("userId")String userId, @QueryParam("quantity")int quantity){
-
-        User u = UserDAO.getUserById(Integer.parseInt(userId));
-
-        StockItem item = StockItemDAO.getStockItemById(Integer.parseInt(id));
-
-        u.getCart().setTotalPrice(u.getCart().getTotalPrice()+(quantity*item.getPrice()));
-        CartDAO.updateCart(u.getCart());
-        CartItem newCartItem = new CartItem(u.getCart(), item, quantity);
-        CartItemDAO.addCartItem(newCartItem);
-
-        return Response.status(200).build();
-    }
-
-    @POST
-    @Path("users/{id}/clear_cart")
-    public Response clearCart(@PathParam("id")String id){
-        User u = UserDAO.getUserById(Integer.parseInt(id));
-        Cart c = u.getCart();
 
 
-        List<CartItem> cartItems = CartItemDAO.getCartItemsByCart(c);
-        for(CartItem cartItem : cartItems)
-            CartItemDAO.removeCartItem(cartItem);
-        cartItems.clear();
-        c.setTotalPrice(0);
-        CartDAO.updateCart(c);
-        UserDAO.updateUser(u);
+    */
 
-        return Response.status(200).build();
-    }
-}

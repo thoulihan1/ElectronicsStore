@@ -1349,3 +1349,11 @@
 0:0:0:0:0:0:0:1 - - [25/Mar/2017:17:08:36 +0000] "GET /newjersey/views/catalog.html HTTP/1.1" 304 - http-bio-8080-exec-8 6
 0:0:0:0:0:0:0:1 - - [25/Mar/2017:17:08:36 +0000] "GET /newjersey/rest/store/manufacturers HTTP/1.1" 200 72 http-bio-8080-exec-10 46
 0:0:0:0:0:0:0:1 - - [25/Mar/2017:17:08:40 +0000] "GET /newjersey/views/logout.html HTTP/1.1" 304 - http-bio-8080-exec-10 2
+0:0:0:0:0:0:0:1 - - [25/Mar/2017:17:16:45 +0000] "GET /newjersey/ HTTP/1.1" 200 6275 http-bio-8080-exec-13 7
+0:0:0:0:0:0:0:1 - - [25/Mar/2017:17:16:45 +0000] "GET /newjersey/js/LoginController.js HTTP/1.1" 200 1268 http-bio-8080-exec-8 5
+0:0:0:0:0:0:0:1 - - [25/Mar/2017:17:16:45 +0000] "GET /newjersey/js/exam1.js HTTP/1.1" 304 - http-bio-8080-exec-8 2
+0:0:0:0:0:0:0:1 - - [25/Mar/2017:17:16:45 +0000] "GET /newjersey/js/CartController.js HTTP/1.1" 200 877 http-bio-8080-exec-1 2
+0:0:0:0:0:0:0:1 - - [25/Mar/2017:17:16:45 +0000] "GET /newjersey/js/CatalogController.js HTTP/1.1" 200 2248 http-bio-8080-exec-8 1
+0:0:0:0:0:0:0:1 - - [25/Mar/2017:17:16:45 +0000] "GET /newjersey/js/RegisterController.js HTTP/1.1" 200 904 http-bio-8080-exec-14 7
+0:0:0:0:0:0:0:1 - - [25/Mar/2017:17:16:45 +0000] "GET /newjersey/js/LogoutController.js HTTP/1.1" 200 237 http-bio-8080-exec-11 7
+0:0:0:0:0:0:0:1 - - [25/Mar/2017:17:16:45 +0000] "GET /newjersey/views/register.html HTTP/1.1" 304 - http-bio-8080-exec-6 3

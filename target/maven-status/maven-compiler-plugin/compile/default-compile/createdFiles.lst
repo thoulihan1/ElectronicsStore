@@ -1,8 +1,10 @@
 groupid/PersistenceUtil.class
-groupid/ManufacturerController.class
+groupid/service/ManufacturerService.class
 groupid/model/Manufacturer.class
 groupid/model/StockItem.class
 groupid/model/User.class
+groupid/service/ProductService.class
+groupid/service/AdminService.class
 groupid/dao/StockItemDAO.class
 groupid/dao/ManufacturerDAO.class
 groupid/dao/UserDAO.class

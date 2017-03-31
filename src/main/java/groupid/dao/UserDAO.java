@@ -1,11 +1,14 @@
 package groupid.dao;
 
 import groupid.PersistenceUtil;
+import groupid.model.Admin;
+import groupid.model.Customer;
 import groupid.model.Manufacturer;
 import groupid.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 /**
@@ -27,15 +30,27 @@ public class UserDAO {
         PersistenceUtil.remove(m);
     }
 
-    public static User getUserByUsernameAndPassword(String username, String password){
+    public static Customer getCustomerById(int id){
         EntityManager em = emf.createEntityManager();
-        User m = (User) em.createNamedQuery("User.getByUsernameAndPassword").setParameter("name", username).setParameter("password", password).getSingleResult();
-        return m;
+        Customer user = (Customer) em.createNamedQuery("Customer.getById").setParameter("id", id).getSingleResult();
+        return user;
     }
 
-    public static User getUserById(int id){
+    public static User getUserByEmailAndPassword(String email, String password){
         EntityManager em = emf.createEntityManager();
-        User m = (User) em.createNamedQuery("User.getById").setParameter("id", id).getSingleResult();
-        return m;
+        User user;
+        try{
+             user = (Admin) em.createNamedQuery("Admin.getByEmailAndPassword").setParameter("email", email).setParameter("password", password).getSingleResult();
+             user.setType("Admin");
+             return user;
+        } catch(NoResultException e){
+            try{
+                user = (Customer) em.createNamedQuery("Customer.getByEmailAndPassword").setParameter("email", email).setParameter("password", password).getSingleResult();
+                user.setType("Customer");
+                return user;
+            } catch (NoResultException e1){
+                return null;
+            }
+        }
     }
 }

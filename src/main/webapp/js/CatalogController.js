@@ -6,9 +6,12 @@
  * Created by Thomas on 3/25/17.
  */
 
-angular.module('app').controller("CatalogController", function ($scope,$http, $window) {
+angular.module('app').controller("CatalogController", function ($scope,$http, $window, $rootScope) {
 
-    $http.get('/newjersey/rest/store/manufacturers')
+    $rootScope.loggedInUser = $window.localStorage.getItem("loggedInName");
+    $rootScope.type = $window.localStorage.getItem("loggedInType");
+
+    $http.get('/newjersey/rest/manufacturers/all')
         .then(function(response){
             $scope.manufacturers = response.data;
         }, function errorCallback(response) {
@@ -17,33 +20,21 @@ angular.module('app').controller("CatalogController", function ($scope,$http, $w
 
     $scope.result = 1;
 
-    $scope.viewManufacturerById = function(){
-        $http.get('/newjersey/rest/manufacturer/' + $scope.id)
-            .then(function(response){
-                $scope.man = response.data;
-            }, function errorCallback(response) {
-                $scope.man = "Error yo";
-            });
-    };
 
     $scope.getAllProducts = function(){
 
-        $http.get('/newjersey/rest/store/products')
+        $http.get('/newjersey/rest/products/all')
             .then(function(response){
-
                 $scope.manProds = response.data;
-
             }, function errorCallback(response) {
                 $scope.allProds = "none";
             });
     }
 
     $scope.manufacturersProducts = function(id){
-        $http.get('/newjersey/rest/store/manufacturers/'+id)
+        $http.get('/newjersey/rest/manufacturers/'+id+'/products/all')
             .then(function(response){
-
                 $scope.manProds = response.data;
-
             }, function errorCallback(response) {
                 $scope.allProds = "none";
             });
@@ -55,16 +46,18 @@ angular.module('app').controller("CatalogController", function ($scope,$http, $w
 
         $http({
             method: 'POST',
-            url: '/newjersey/rest/store/products/'+stockItemId+'/add_to_cart?userId='+userId+"&quantity=" + quant,
+            url: '/newjersey/rest/products/'+stockItemId+'/add_to_cart?userId='+userId+"&quantity=" + quant,
         }).then(function (result) {
             console.log(result);
             $scope.msg = "Congratulations " + stockItemId + ",added to cart!";
+            alert(stockItemId + " added to cart!");
+
         }, function (error) {
             console.log(error);
             $scope.msg = "err0r - " + error;
         });
 
-        $http.get('/newjersey/rest/store/users/'+userId+ '/cart')
+        $http.get('/newjersey/rest/customers/'+userId+ '/cart')
             .then(function(response){
 
                 $scope.cartItems = response.data;
@@ -74,5 +67,12 @@ angular.module('app').controller("CatalogController", function ($scope,$http, $w
                 $scope.allProds = "none";
             });
     }
+
+    $scope.sortType     = 'name'; // set the default sort type
+    $scope.sortReverse  = false;  // set the default sort order
+
+
+
+
 
 });

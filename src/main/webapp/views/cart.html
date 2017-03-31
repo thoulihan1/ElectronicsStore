@@ -14,11 +14,19 @@
         <td>{{cartItem.quantity}}</td>
         <td><a href="#"><span class="glyphicon glyphicon-trash"></span></a></td>
     </tr>
+    <tr>
+        <td>Total Price</td>
+        <td>{{totalCartPrice}}</td>
+    </tr>
 </table>
 
 Total Price: {{totalCartPrice}}
 
 <br>
 
-<button ng-click="clearCart()">Clear Cart</button>
+<button class="btn btn-danger" ng-click="clearCart()">Clear Cart</button>
+<button class="btn btn-primary" ng-click="purchase()">Check Out</button>
+<br><hr>
+<b>{{message}}</b>
+<hr>
 

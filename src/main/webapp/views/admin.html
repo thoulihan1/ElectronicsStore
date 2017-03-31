@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Add Manufacturer</h1>
+<input type="text" ng-model="newManufacturer" placeholder="Manufacturer name"/><br>
+<br>
+<button ng-click="addManufacturer()">Create</button>
+
+<br><br><br>
+{{manufacturerMsg}}
+<br>
+<hr>
+<br><br>
+<h3>Add Product</h3>
+<input type="text" ng-model="title" placeholder="Title"/><br>
+<input type="text" ng-model="price" placeholder="Price"/><br>
+<select ng-model="manufacturerNewProduct" ng-options="item.id as item.name for item in manufacturers">
+    <option value="">Manufacturer</option>
+</select><br>
+<input type="text" ng-model="category" placeholder="category"/><br>
+<br>
+<button ng-click="addProduct(title, manufacturerNewProduct, price)">Add</button>
+<br><br><br>
+{{productMsg}}
+<hr></body>
+</html>

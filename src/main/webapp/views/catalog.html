@@ -1,44 +1,101 @@
-<div>
-<button ng-click="getAllProducts()" class="btn btn-primary">All Products</button>
-
-<ol>
+<div xmlns:ng="http://www.w3.org/1999/xhtml">
+    <div class="text-center">
+    <button ng-click="getAllProducts()" class="btn btn-primary">All Products</button>
+    </div>
+    <br>
+<!--
+    <ol>
     <li ng-repeat = "stockItem in stockItems">
         {{stockItem.title}},{{stockItem.manufacturer.name}},${{stockItem.price}},{{stockItem.leftInStock}}
     </li>
 </ol>
+-->
 
-<select ng-model="selectedManufacturer"
+    <form class="form-inline" role="form">
+<center>
+    <select class="form-control" ng-model="selectedManufacturer"
         ng-options="item.id as item.name for item in manufacturers">
-    <option value="">Select Manufacturer</option>
+    <option value="" disabled>Select Manufacturer</option>
+
 </select>
 
+<button class="btn btn-primary" ng-click="manufacturersProducts(selectedManufacturer)">Show</button>
+</center>
+    </form>
 
-<button ng-click="manufacturersProducts(selectedManufacturer)">Show</button>
-<br><br>
+ <hr>
 
-<table class="table" border="1" width="80%">
+    <form class="center_div">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></i></div>
+                <input type="text" class="form-control" placeholder="Search Products" ng-model="searchProducts">
+            </div>
+        </div>
+    </form>
+
+<table class="table table-hover"  width="80%">
     <thead>
     <tr>
-        <td>Image</td>
-        <td>Title</td>
-        <td>Manufacturer</td>
-        <td>Price</td>
-        <td>In Stock</td>
+
+        <th>Image</th>
+        <th><a href="" ng-click="sortType = 'title'; sortReverse = !sortReverse">Title
+            <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-up"></span>
+        </a></th>
+        <th><a href="" ng-click="sortType = 'manufacturer'; sortReverse = !sortReverse">Manufacturer
+            <span ng-show="sortType == 'manufacturer' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'manufacturer' && sortReverse" class="fa fa-caret-up"></span>
+        </a></th>
+        <th><a href="" ng-click="sortType = 'price'; sortReverse = !sortReverse">Price
+            <span ng-show="sortType == 'price' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'price' && sortReverse" class="fa fa-caret-up"></span>
+        </a></th>
+        <th><a href="" ng-click="sortType = 'stock'; sortReverse = !sortReverse">Stock
+            <span ng-show="sortType == 'stock' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'stock' && sortReverse" class="fa fa-caret-up"></span>
+        </a></th>
+        <th></th>
     </tr>
     </thead>
-    <tr ng-repeat = "stockItem in manProds">
+    <tr ng-repeat = "stockItem in manProds | orderBy:sortType:sortReverse | filter:searchProducts" >
         <td><img height="50" ng-src="{{stockItem.imgUrl}}"/></td>
         <td>{{stockItem.title}}</td>
         <td>{{stockItem.manufacturer.name}}</td>
         <td>{{stockItem.price}}</td>
         <td>{{stockItem.leftInStock}}</td>
-        <td ng-show="stockItem.leftInStock == 0"><button disabled>Out Of Stock</button></td>
+        <td ng-show="stockItem.leftInStock == 0"><button class="btn btn-danger" disabled>Out Of Stock</button></td>
         <td ng-show="stockItem.leftInStock > 0">
-            <input type="number" ng-model="quant"/>
-            <button ng-click="addItemToCart(stockItem.id, quant)">Add to Cart</button>
+            <form class="form-inline" role="form">
+            <input class="form-control" type="number" ng-model="quant" min="1" max="{{stockItem.leftInStock}}" width="10%"/>
+                <button ng-click="addItemToCart(stockItem.id, quant)" class="btn btn-primary">Add to Cart</button>
+
+            </form>
         </td>
         {{boits}}
     </tr>
+
 </table>
+
+
+
+    <br><hr><br>
 <hr>
+    <style>
+        .table {
+            border-radius: 5px;
+            width: 70%;
+            margin: 0px auto;
+            float: none;
+        }
+
+        .form-control{
+            width: 200px;
+        }
+
+        .center_div{
+            margin: 0 auto;
+            width:30% /* value of your choice which suits your alignment */
+        }
+    </style>
 </div>

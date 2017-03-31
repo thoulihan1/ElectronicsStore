@@ -4,13 +4,14 @@
 
 
 
-angular.module('app').controller("CartController", function ($scope,$http, $window) {
+angular.module('app').controller("CartController", function ($scope,$http, $window, $rootScope) {
 
-
+    $rootScope.loggedInUser = $window.localStorage.getItem("loggedInName");
+    $rootScope.type = $window.localStorage.getItem("loggedInType");
 
     var id = $window.localStorage.getItem("loggedInId");
 
-    $http.get('/newjersey/rest/store/users/'+id+ '/cart')
+    $http.get('/newjersey/rest/customers/'+id+ '/cart')
         .then(function(response){
 
             $scope.cartItems = response.data;
@@ -23,13 +24,30 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
     $scope.clearCart = function(){
         $http({
             method: 'POST',
-            url: '/newjersey/rest/store/users/'+id+'/clear_cart',
+            url: '/newjersey/rest/customers/'+id+'/clear_cart',
         }).then(function (result) {
             console.log(result);
-            $scope.msg = "CLEARED";
+            $scope.message = "CLEARED";
+            $scope.cartItems = null;
+            $scope.totalCartPrice = null;
         }, function (error) {
             console.log(error);
-            $scope.msg = "err0r - " + error;
+            $scope.message = "err0r - " + error;
+        });
+    }
+
+    $scope.purchase = function(){
+        $http({
+            method: 'POST',
+            url: '/newjersey/rest/customers/'+id+'/checkout',
+        }).then(function (result) {
+            console.log(result);
+            $scope.cartItems = null;
+            $scope.totalCartPrice = null;
+            $scope.message = "Congratulations, purchased!";
+        }, function (error) {
+            console.log(error);
+            $scope.message = "err0r - " + error;
         });
     }
 
