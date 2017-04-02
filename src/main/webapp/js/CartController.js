@@ -16,10 +16,37 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
 
             $scope.cartItems = response.data;
             $scope.totalCartPrice = response.data[0].cart.totalPrice;
+            $scope.message = response.data;
 
         }, function errorCallback(response) {
             $scope.allProds = "none";
         });
+
+    $scope.removeItemFromCart = function(cartItemId){
+        $http({
+            method: 'POST',
+            url: '/newjersey/rest/customers/'+id+'/removeItemFromCart?itemId=' + cartItemId,
+        }).then(function (result) {
+            console.log(result);
+            $scope.message = "Item removed.";
+
+            $http.get('/newjersey/rest/customers/'+id+ '/cart')
+                .then(function(response){
+
+                    $scope.cartItems = response.data;
+                    $scope.totalCartPrice = response.data[0].cart.totalPrice;
+                    $scope.message = response.data;
+
+                }, function errorCallback(response) {
+                    $scope.allProds = "none";
+                });
+
+        }, function (error) {
+            console.log(error);
+            $scope.message = "err0r - " + error;
+        });
+    }
+
 
     $scope.clearCart = function(){
         $http({

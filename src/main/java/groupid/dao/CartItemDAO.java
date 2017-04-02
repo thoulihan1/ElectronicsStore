@@ -31,7 +31,7 @@ public class CartItemDAO {
         PersistenceUtil.remove(m);
     }
 
-    public static CartItem getCartItemById(String id){
+    public static CartItem getCartItemById(int id){
         EntityManager em = emf.createEntityManager();
         CartItem m = (CartItem) em.createNamedQuery("CartItem.getById").setParameter("id", id).getSingleResult();
         return m;

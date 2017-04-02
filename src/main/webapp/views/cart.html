@@ -12,13 +12,14 @@
         <td>{{cartItem.stockItem.title}}</td>
         <td>{{cartItem.stockItem.price}}</td>
         <td>{{cartItem.quantity}}</td>
-        <td><a href="#"><span class="glyphicon glyphicon-trash"></span></a></td>
+        <td><a ng-click="removeItemFromCart(cartItem.id)"><span class="glyphicon glyphicon-trash"></span></a></td>
     </tr>
     <tr>
         <td>Total Price</td>
         <td>{{totalCartPrice}}</td>
     </tr>
 </table>
+
 
 Total Price: {{totalCartPrice}}
 

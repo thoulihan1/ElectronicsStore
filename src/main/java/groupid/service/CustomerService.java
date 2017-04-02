@@ -35,14 +35,6 @@ public class CustomerService {
     }
 
     @GET
-    @Path("/hi")
-    @Produces("application/json")
-    public String registerAdmin() {
-
-       return "hi there";
-    }
-
-    @GET
     @Path("/{id}/cart")
     public String getUsersCart(@PathParam("id")String id) {
         Customer u = UserDAO.getCustomerById(Integer.parseInt(id));
@@ -52,6 +44,20 @@ public class CustomerService {
         String json = gson.toJson(cartItems);
         return json;
     }
+
+    @POST
+    @Path("/{id}/removeItemFromCart")
+    public Response removeItemFromCart(@PathParam("id")String id, @QueryParam("itemId")String itemId){
+        Customer u = UserDAO.getCustomerById(Integer.parseInt(id));
+        Cart c = u.getCart();
+        CartItem cartItem = CartItemDAO.getCartItemById(Integer.parseInt(itemId));
+        CartItemDAO.removeCartItem(cartItem);
+        c.setTotalPrice(c.getTotalPrice()-(cartItem.getStockITem().getPrice()*cartItem.getQuantity()));
+        CartDAO.updateCart(c);
+        return Response.status(200).build();
+    }
+
+
 
     @POST
     @Path("/{id}/checkout")
