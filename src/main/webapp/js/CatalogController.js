@@ -71,8 +71,19 @@ angular.module('app').controller("CatalogController", function ($scope,$http, $w
     $scope.sortType     = 'name'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
 
+    $scope.changeStockQuantity = function(stockItemId, stockQuantity){
 
+        $http({
+            method: 'POST',
+            url: '/newjersey/rest/products/'+stockItemId+'/updateQuantity?quantity=' + stockQuantity,
+        }).then(function (result) {
+            console.log(result);
+            $scope.msg = "Stock item " + stockItemId + " updated";
+            alert(stockItemId + " quantity updated to " + stockQuantity);
 
-
-
+        }, function (error) {
+            console.log(error);
+            $scope.msg = "err0r - " + error;
+        });
+    }
 });

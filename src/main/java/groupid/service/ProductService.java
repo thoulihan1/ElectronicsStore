@@ -57,4 +57,17 @@ public class ProductService {
 
         return Response.status(200).build();
     }
+
+    @POST
+    @Path("/{id}/updateQuantity")
+    public Response updateQuantity(@PathParam("id")String id, @QueryParam("quantity")String quantity){
+        StockItem item = StockItemDAO.getStockItemById(Integer.parseInt(id));
+        item.setLeftInStock(Integer.parseInt(quantity));
+        StockItemDAO.updateStockItem(item);
+
+        return Response.status(200).build();
+    }
+
+
+
 }

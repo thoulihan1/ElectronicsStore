@@ -56,6 +56,7 @@
             <span ng-show="sortType == 'stock' && sortReverse" class="fa fa-caret-up"></span>
         </a></th>
         <th></th>
+        <th class="warning" ng-show="type=='Admin'">Admin</th>
     </tr>
     </thead>
     <tr ng-repeat = "stockItem in manProds | orderBy:sortType:sortReverse | filter:searchProducts" >
@@ -69,8 +70,15 @@
             <form class="form-inline" role="form">
             <input class="form-control" type="number" ng-model="quant" min="1" max="{{stockItem.leftInStock}}" width="10%"/>
                 <button ng-click="addItemToCart(stockItem.id, quant)" class="btn btn-primary">Add to Cart</button>
-
             </form>
+        </td>
+
+        <td class="warning" ng-show="type=='Admin'">
+            <form class="form-inline" role="form">
+                <input class="form-control" type="number" ng-model="stockQuantity" min="1" width="10%"/>
+                <button ng-click="changeStockQuantity(stockItem.id, stockQuantity)" class="btn btn-primary">Update Stock Quantity</button>
+            </form>
+
         </td>
         {{boits}}
     </tr>
