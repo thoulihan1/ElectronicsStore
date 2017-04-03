@@ -1,11 +1,25 @@
 <div>
 <center>
     <H1>Register</H1>
-    <input type="text" ng-model="createUsername" placeholder="username"/><br>
-    <input type="text" ng-model="createPassword" placeholder="password"/>
+    <input type="text" class="form-control h" ng-model="newName" placeholder="Name"/><br>
+    <input type="text" class="form-control h" ng-model="newEmail" placeholder="Email"/><br>
+    <input type="text" class="form-control h" ng-model="newPassword" placeholder="Password"/>
     <br>
-    <button ng-click="register()">Login</button>
+    Admin<input type="checkbox" id="isAdmin"/>
+    <br>
+    <button ng-click="register()" class="btn btn-default">Create</button>
+
     <br>
     {{msg}}
+
+    <button ng-click="bop()">Create</button>
 </center>
 </div>
+
+<style>
+
+    .h{
+        width: 15%;
+    }
+
+</style>
