@@ -26,8 +26,21 @@ Total Price: {{totalCartPrice}}
 <br>
 
 <button class="btn btn-danger" ng-click="clearCart()">Clear Cart</button>
-<button class="btn btn-primary" ng-click="purchase()">Check Out</button>
+<button class="btn btn-primary" ng-click="checkout()">Check Out</button>
 <br><hr>
 <b>{{message}}</b>
 <hr>
 
+<div id="payment">
+    <form class="form-inline" role="form">
+        <center>
+            <select class="form-control" ng-model="payType">
+                <option value="" disabled>Select Payment Option</option>
+                <option value="PayPal" >PayPal</option>
+                <option value="Card" >Card</option>
+                <option value="Stripe" >Stripe</option>
+            </select>
+            <button class="btn btn-primary" ng-click="pay(payType)">Pay</button>
+        </center>
+    </form>
+</div>

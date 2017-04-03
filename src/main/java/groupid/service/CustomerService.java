@@ -61,7 +61,7 @@ public class CustomerService {
 
     @POST
     @Path("/{id}/checkout")
-    public Response checkout(@PathParam("id")String id) {
+    public Response checkout(@PathParam("id")String id, @QueryParam("paymentType")String paymentType) {
         Customer customer = UserDAO.getCustomerById(Integer.parseInt(id));
 
         Cart cart = customer.getCart();
