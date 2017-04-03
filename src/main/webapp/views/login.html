@@ -1,15 +1,25 @@
 <div id="gh">
     <center><h1>Login</h1>
 
-        <input type="text" ng-model="email" placeholder="email"/><br>
-        <input type="text" ng-model="password" placeholder="password"/>
+
+        <input class="form-control h" type="text" ng-model="email" placeholder="email"/><br>
+        <input class="form-control h" type="text" ng-model="password" placeholder="password"/>
         <br>
-        <button ng-click="login()">Login</button>
+        <button ng-click="login()" class="btn btn-primary">Login</button>
         <br>
         {{result}}
 
         Click <a href="#/register">here</a> to register
         <br><br><br><br>
-        <button ng-click="logout()">Logout</button>
+        <button ng-click="logout()" class="btn btn-primary">Logout</button>
     </center>
 </div>
+
+<style>
+
+    .h{
+        width: 15%;
+    }
+
+</style>
+

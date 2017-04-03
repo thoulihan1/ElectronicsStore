@@ -10,10 +10,12 @@
     <script src="js/LogoutController.js"></script>
     <script src="js/CartController.js"></script>
     <script src="js/AdminController.js"></script>
+    <script src="js/OrderHistoryController.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
 
 </head>
 <body ng-app='app'>
@@ -46,6 +48,11 @@
                     <ul class="dropdown-menu">
                         <li><a href="#">Profile</a></li>
                         <li><a href="#/cart">Cart</a></li>
+                        <li ng-show="type=='Admin'" role="separator" class="divider"/>
+
+                        <li ng-show="type=='Admin'"><a href="#/admin">Admin</a></li>
+                        <li ng-show="type=='Admin'"><a href="#/orderHistory">View Order History</a></li>
+
                         <li role="separator" class="divider"></li>
                         <li><a href="#/logout">Log Out</a></li>
                     </ul>

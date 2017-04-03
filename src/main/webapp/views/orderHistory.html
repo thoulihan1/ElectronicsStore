@@ -1,0 +1,49 @@
+<div>
+
+    <hr>
+
+
+    <table class="table table-hover bop"  width="80%">
+        <tr>
+            <th>Customer</th>
+            <th>Date</th>
+            <th>Total Cost</th>
+            <th>Payment Method</th>
+        </tr>
+    </table>
+
+    <table ng-repeat = "history in orderHistory" class="table table-hover bop"  width="80%">
+
+        <tr bgcolor="#fffacd">
+        <td>{{history.customer.email}}</td>
+        <td>{{history.dateTime}}</td>
+        <td>{{history.price}}</td>
+        <td>{{history.paymentMethod}}</td>
+        <tr ng-repeat = "items in history.orderItems">
+            <td>{{items.stockItem.manufacturer.name}} {{items.stockItem.title}} x {{items.quantity}}</td><td></td><td></td></tr>
+        </tr>
+        <br><br>
+    </table>
+
+    <hr>
+    <style>
+        .table {
+            border-radius: 5px;
+            width: 70%;
+            margin: 0px auto;
+            float: none;
+        }
+
+        .center_div{
+            margin: 0 auto;
+            width:30%;
+        }
+
+        .bop{
+            margin-bottom: 50px;
+        }
+
+        td { width: 20%; }
+        th {width: 20%;}
+    </style>
+</div>

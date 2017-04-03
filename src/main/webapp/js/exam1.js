@@ -2,7 +2,7 @@
  * Created by Thomas on 3/13/17.
  */
 (function(){
-    var app = angular.module('app',['ngRoute'])
+    var app = angular.module('app',['ngRoute', 'ui.bootstrap.modal'])
         .config(['$routeProvider', function($routeProvider){
             $routeProvider
                 .when('/',{
@@ -35,6 +35,10 @@
                 .when('/admin',{
                     templateUrl: 'views/admin.html',
                     controller : "AdminController"
+                })
+                .when('/orderHistory',{
+                    templateUrl: 'views/orderHistory.html',
+                    controller : "OrderHistoryController"
                 })
                 .otherwise({redirectTo:'/'});
         }]);

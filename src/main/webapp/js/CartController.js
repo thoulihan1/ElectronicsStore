@@ -22,9 +22,6 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
                 $scope.message = response.data;
             } else
                 $scope.message = "No items in cart";
-
-
-
         }, function errorCallback(response) {
             $scope.allProds = "none";
         });
@@ -48,13 +45,7 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
                         $scope.message = "No items in cart";
                         $scope.cartItems = null;
                         $scope.totalCartPrice = null;
-
-
                     }
-
-
-
-
                 }, function errorCallback(response) {
                     $scope.allProds = "none";
                 });
@@ -176,7 +167,6 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
     $scope.pay = function(payType){
         payStrategy(payType);
     }
-
 
 
     var payStrategy = function(payType){

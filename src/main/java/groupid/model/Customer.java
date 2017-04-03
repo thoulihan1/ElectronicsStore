@@ -3,6 +3,8 @@ package groupid.model;
 import groupid.dao.CartDAO;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Thomas on 3/31/17.
@@ -20,17 +22,15 @@ import javax.persistence.*;
 @Entity
 public class Customer extends User{
 
-
     @OneToOne
     private Cart cart;
 
+
     public Customer() {
     }
-
     public Cart getCart() {
         return cart;
     }
-
     public void setCart(Cart c) {
         this.cart = c;
     }

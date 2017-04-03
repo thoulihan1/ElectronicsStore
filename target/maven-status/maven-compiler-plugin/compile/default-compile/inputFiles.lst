@@ -1,4 +1,6 @@
+/Users/Thomas/IdeaProjects/src/main/java/groupid/model/OrderItem.java
 /Users/Thomas/IdeaProjects/src/main/java/groupid/model/StockItem.java
+/Users/Thomas/IdeaProjects/src/main/java/groupid/dao/OrderItemDAO.java
 /Users/Thomas/IdeaProjects/src/main/java/groupid/dao/StockItemDAO.java
 /Users/Thomas/IdeaProjects/src/main/java/groupid/dao/CartDAO.java
 /Users/Thomas/IdeaProjects/src/main/java/groupid/dao/UserDAO.java
@@ -10,6 +12,8 @@
 /Users/Thomas/IdeaProjects/src/main/java/groupid/model/CartItem.java
 /Users/Thomas/IdeaProjects/src/main/java/groupid/PersistenceUtil.java
 /Users/Thomas/IdeaProjects/src/main/java/groupid/service/AdminService.java
+/Users/Thomas/IdeaProjects/src/main/java/groupid/model/OrderHistory.java
+/Users/Thomas/IdeaProjects/src/main/java/groupid/dao/OrderHistoryDAO.java
 /Users/Thomas/IdeaProjects/src/main/java/groupid/dao/ManufacturerDAO.java
 /Users/Thomas/IdeaProjects/src/main/java/groupid/Main.java
 /Users/Thomas/IdeaProjects/src/main/java/groupid/model/User.java

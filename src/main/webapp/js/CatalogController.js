@@ -61,7 +61,10 @@ angular.module('app').controller("CatalogController", function ($scope,$http, $w
             .then(function(response){
 
                 $scope.cartItems = response.data;
-                $scope.totalCartPrice = response.data[0].cart.totalPrice;
+                if(response.data.length>0){
+                    $scope.totalCartPrice = response.data[0].cart.totalPrice;
+
+                }
 
             }, function errorCallback(response) {
                 $scope.allProds = "none";

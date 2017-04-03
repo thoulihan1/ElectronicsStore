@@ -3,15 +3,16 @@ package groupid.service;
 
 import com.google.gson.Gson;
 import groupid.UserFactory;
-import groupid.dao.CartDAO;
-import groupid.dao.CartItemDAO;
-import groupid.dao.StockItemDAO;
-import groupid.dao.UserDAO;
+import groupid.dao.*;
 import groupid.model.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -64,13 +65,36 @@ public class CustomerService {
     public Response checkout(@PathParam("id")String id, @QueryParam("paymentType")String paymentType) {
         Customer customer = UserDAO.getCustomerById(Integer.parseInt(id));
 
+
+        OrderHistory orderHistory = new OrderHistory();
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+
+        orderHistory.setDateTime(dateFormat.format(date));
+        orderHistory.setCustomer(customer);
+        orderHistory.setPaymentMethod(paymentType);
         Cart cart = customer.getCart();
+        orderHistory.setPrice(cart.getTotalPrice());
+        List<OrderItem> orderItems = orderHistory.getOrderItems();
+
         List<CartItem> cartItems = CartItemDAO.getCartItemsByCart(cart);
         for(CartItem item:cartItems){
             StockItem stockItem = item.getStockITem();
             stockItem.setLeftInStock(stockItem.getLeftInStock()-item.getQuantity());
             StockItemDAO.updateStockItem(stockItem);
+
+            OrderItem orderItem = new OrderItem();
+            orderItem.setStockItem(item.getStockITem());
+            orderItem.setQuantity(item.getQuantity());
+            OrderItemDAO.addOrderItem(orderItem);
+
+            orderItems.add(orderItem);
+
         }
+
+        OrderHistoryDAO.addOrderHistory(orderHistory);
+
 
         for(CartItem cartItem : cartItems)
             CartItemDAO.removeCartItem(cartItem);
@@ -78,6 +102,9 @@ public class CustomerService {
         cart.setTotalPrice(0);
         CartDAO.updateCart(cart);
         UserDAO.updateUser(customer);
+
+
+
 
         return Response.status(200).build();
     }

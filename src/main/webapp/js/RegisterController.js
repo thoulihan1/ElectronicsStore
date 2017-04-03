@@ -45,15 +45,8 @@ angular.module('app').controller("RegisterController", function ($scope,$http) {
     var Customer = function () {
     };
 
-
-
-
     function register(user){
-
-
         var json = angular.toJson(user);
-
-
         $http({
             method: 'POST',
             url: '/newjersey/rest/'+user.type+'s/add/',
@@ -67,9 +60,7 @@ angular.module('app').controller("RegisterController", function ($scope,$http) {
             $scope.msg = "Congratulations. " + user.type + " " +  user.name + " has registered successfully!";
         }, function (error) {
             console.log(error);
-            $scope.msg = "erggr0r - " + error;
+            $scope.msg = "error " + error;
         });
     }
-
-
 });
