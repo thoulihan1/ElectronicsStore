@@ -1,5 +1,7 @@
+groupid/Hello$LoginAsCustomer.class
 groupid/service/ProductService.class
 groupid/dao/StockItemDAO.class
+groupid/Hello$LoginAsAdmin.class
 groupid/dao/OrderHistoryDAO.class
 groupid/dao/ManufacturerDAO.class
 groupid/dao/UserDAO.class
@@ -7,6 +9,7 @@ groupid/model/OrderItem.class
 groupid/PersistenceUtil.class
 groupid/service/ManufacturerService.class
 groupid/model/Manufacturer.class
+groupid/Hello$LogInChain.class
 groupid/model/StockItem.class
 groupid/model/User.class
 groupid/service/AdminService.class

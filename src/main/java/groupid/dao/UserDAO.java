@@ -36,6 +36,21 @@ public class UserDAO {
         return user;
     }
 
+    public static User getAdminByEmailAndPassword(String email, String password){
+        EntityManager em = emf.createEntityManager();
+        User user = (Admin) em.createNamedQuery("Admin.getByEmailAndPassword").setParameter("email", email).setParameter("password", password).getSingleResult();
+        user.setType("Admin");
+        return user;
+    }
+
+    public static User getCustomerByEmailAndPassword(String email, String password){
+        EntityManager em = emf.createEntityManager();
+        User user = (Customer) em.createNamedQuery("Customer.getByEmailAndPassword").setParameter("email", email).setParameter("password", password).getSingleResult();
+        user.setType("Customer");
+        return user;
+    }
+
+
     public static User getUserByEmailAndPassword(String email, String password){
         EntityManager em = emf.createEntityManager();
         User user;

@@ -17,7 +17,13 @@ public class Hello {
     @GET
     @Path("/login")
     public Response login(@QueryParam("email") String email, @QueryParam("password") String password) {
-        User u = UserDAO.getUserByEmailAndPassword(email, password);
+        LogInChain loginAsAdmin = new LoginAsAdmin();
+        LogInChain loginAsCustomer = new LoginAsCustomer();
+
+        loginAsAdmin.setNextChain(loginAsCustomer);
+
+        User u = loginAsAdmin.login(email, password);
+
         if (u != null) {
             String json = gson.toJson(u);
             return Response.status(200).entity(json).build();
@@ -25,73 +31,51 @@ public class Hello {
             return Response.status(401).build();
         }
     }
+
+    public interface LogInChain{
+        public void setNextChain(LogInChain nextInChain);
+        public User login(String email, String password);
+    }
+
+
+    public static class LoginAsAdmin implements LogInChain{
+
+        private  LogInChain nextInChain;
+
+        public void setNextChain(LogInChain nextChain) {
+            nextInChain = nextChain;
+        }
+
+        public User login(String email, String password) {
+            try{
+                User u = UserDAO.getAdminByEmailAndPassword(email, password);
+                System.out.println("Logging in as admin");
+                return u;
+            } catch(Exception e){
+                System.out.println("Not an admin, try as customer");
+                return nextInChain.login(email, password);
+            }
+        }
+    }
+
+    public static class LoginAsCustomer implements LogInChain{
+
+        private  LogInChain nextInChain;
+
+        public void setNextChain(LogInChain nextChain) {
+            nextInChain = nextChain;
+        }
+
+        public User login(String email, String password) {
+            try{
+                User u = UserDAO.getCustomerByEmailAndPassword(email, password);
+                System.out.println("Logging in as customer");
+                return u;
+            } catch(Exception e){
+                System.out.println("Not a customer, end of chain");
+                return null;
+            }
+        }
+    }
 }
-
-       /*
-    @POST
-    @Path("/users")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createUser(String json){
-
-        Gson gson = new Gson();
-        User newUser = gson.fromJson(json, User.class);
-        Cart cart = new Cart();
-        CartDAO.addCart(cart);
-        newUser.setCart(cart);
-
-        UserDAO.addUser(newUser);
-        return Response.status(200).build();
-    }
-
-
-
-
-
-    @GET
-    @Path("/manufacturers")
-    public String getManufacturers() {
-        List<Manufacturer> allManufacturers = ManufacturerDAO.getAllManufacturers();
-        Gson gson = new Gson();
-
-        String json = gson.toJson(allManufacturers);
-        return json;
-    }
-
-
-
-
-
-
-
-    @POST
-    @Path("/manufacturers")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createManufacturer(String json){
-
-        Gson gson = new Gson();
-        Manufacturer newManufacturer = gson.fromJson(json, Manufacturer.class);
-
-        ManufacturerDAO.addManufacturer(newManufacturer);
-        return Response.status(200).build();
-    }
-
-    @POST
-    @Path("/products")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createProduct(String json){
-
-        Gson gson = new Gson();
-        StockItem newStockItem = gson.fromJson(json, StockItem.class);
-
-        Manufacturer m = ManufacturerDAO.getManufacturerById(newStockItem.getManufacturer().getId()+"");
-        newStockItem.setManufacturer(m);
-
-        StockItemDAO.addStockItem(newStockItem);
-        return Response.status(200).build();
-    }
-
-
-
-
-    */
 

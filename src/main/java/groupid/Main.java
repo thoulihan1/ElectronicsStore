@@ -5,6 +5,7 @@ import com.mysql.cj.mysqlx.protobuf.MysqlxCrud;
 import groupid.dao.*;
 import groupid.model.*;
 
+import javax.ws.rs.core.Response;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,40 +16,26 @@ import java.util.List;
  */
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
-        Customer customer = UserDAO.getCustomerById(10);
+        Hello.LogInChain loginAsAdmin = new Hello.LoginAsAdmin();
+        Hello.LogInChain loginAsCustomer = new Hello.LoginAsCustomer();
 
-        OrderHistory orderHistory = new OrderHistory();
+        loginAsAdmin.setNextChain(loginAsCustomer);
 
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date date = new Date();
+Gson gson = new Gson();
 
-        orderHistory.setDateTime(dateFormat.format(date));
-        orderHistory.setCustomer(customer);
-        orderHistory.setPaymentMethod("Debit");
+        User u = loginAsAdmin.login("t@gmail.com", "pass");
 
-
-
-        List<OrderItem> orderItems = orderHistory.getOrderItems();
-
-
-        OrderItem orderItem = new OrderItem();
-
-        orderItem.setStockItem(StockItemDAO.getStockItemById(3));
-        orderItem.setQuantity(1);
-        OrderItemDAO.addOrderItem(orderItem);
-
-        orderItems.add(orderItem);
-
-        OrderHistoryDAO.addOrderHistory(orderHistory);
-
-
-        System.out.println(orderItems.size());
-
-
-
-       // OrderHistory h = OrderHistoryDAO.getOrderHistoryById(14);
-        //System.out.println(h.getOrderItems().size());
+        System.out.println(u.getName());
+        if (u != null) {
+            String json = gson.toJson(u);
+            System.out.println("users not null");
+        } else {
+            System.out.println("users null");
+        }
     }
+
+
 }
+
