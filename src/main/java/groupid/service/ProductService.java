@@ -3,6 +3,7 @@ package groupid.service;
 import com.google.gson.Gson;
 import groupid.dao.*;
 import groupid.model.*;
+import groupid.observer.Topic;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -15,7 +16,6 @@ import java.util.List;
 
 @Path("/products")
 public class ProductService {
-
     @POST
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -24,10 +24,16 @@ public class ProductService {
         Gson gson = new Gson();
         StockItem newStockItem = gson.fromJson(json, StockItem.class);
 
+
+
         Manufacturer m = ManufacturerDAO.getManufacturerById(newStockItem.getManufacturer().getId()+"");
         newStockItem.setManufacturer(m);
 
+        Topic topic = new Topic();
+        topic.setStockItem(newStockItem);
+
         StockItemDAO.addStockItem(newStockItem);
+
         return Response.status(200).build();
     }
 

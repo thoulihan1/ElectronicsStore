@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import groupid.UserFactory;
 import groupid.dao.*;
 import groupid.model.*;
+import groupid.observer.Topic;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -32,7 +33,45 @@ public class CustomerService {
         newUser.setCart(cart);
 
         UserDAO.addUser(newUser);
+
+        Topic topic = new Topic();
+        newUser.setTopic(topic);
         return Response.status(200).build();
+    }
+
+
+    @GET
+    @Path("/{id}/unsubscribe")
+    public String unsub(@PathParam("id")String id) {
+        Customer u = UserDAO.getCustomerById(Integer.parseInt(id));
+
+
+        Topic topic = new Topic();
+        topic.unregister(u);
+
+        return "Unsubscribed";
+    }
+
+    @GET
+    @Path("/{id}/subscribe")
+    public String sub(@PathParam("id")String id) {
+        Customer u = UserDAO.getCustomerById(Integer.parseInt(id));
+
+
+        Topic topic = new Topic();
+        u.setTopic(topic);
+
+        return "Subscribed";
+    }
+
+    @GET
+    @Path("/{id}")
+    public String getUser(@PathParam("id")String id) {
+        Customer u = UserDAO.getCustomerById(Integer.parseInt(id));
+
+        Gson gson = new Gson();
+        String json = gson.toJson(u);
+        return json;
     }
 
     @GET
