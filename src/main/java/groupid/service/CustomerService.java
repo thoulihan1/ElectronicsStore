@@ -6,6 +6,9 @@ import groupid.UserFactory;
 import groupid.dao.*;
 import groupid.model.*;
 import groupid.observer.Topic;
+import groupid.strategy.DiscountStrategy;
+import groupid.strategy.FirstTimeDiscountStrategy;
+import groupid.strategy.Over2000DiscountStrategy;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -69,6 +72,7 @@ public class CustomerService {
     public String getUser(@PathParam("id")String id) {
         Customer u = UserDAO.getCustomerById(Integer.parseInt(id));
 
+
         Gson gson = new Gson();
         String json = gson.toJson(u);
         return json;
@@ -79,6 +83,7 @@ public class CustomerService {
     public String getUsersCart(@PathParam("id")String id) {
         Customer u = UserDAO.getCustomerById(Integer.parseInt(id));
         Cart cart = u.getCart();
+
         List<CartItem> cartItems = CartItemDAO.getCartItemsByCart(cart);
         Gson gson = new Gson();
         String json = gson.toJson(cartItems);
@@ -104,6 +109,36 @@ public class CustomerService {
     public Response checkout(@PathParam("id")String id, @QueryParam("paymentType")String paymentType) {
         Customer customer = UserDAO.getCustomerById(Integer.parseInt(id));
 
+        Cart cart = customer.getCart();
+
+
+
+        List<OrderHistory> purchaseHistory = OrderHistoryDAO.getOrderHistoryByCustomer(customer);
+        System.out.println("Previous purchases: " + purchaseHistory.size());
+
+        System.out.println("Cart price before discount: " +cart.getTotalPrice());
+
+        DiscountStrategy firstTimeDiscountStrategy= new FirstTimeDiscountStrategy();
+        DiscountStrategy over2000DiscountStrategy = new Over2000DiscountStrategy();
+        double discount = 0.0;
+
+        if(purchaseHistory.size()==0){
+            System.out.println("\nFirst purchase. applying 10% discount");
+            cart.setDiscountStrategy(firstTimeDiscountStrategy);
+            discount = cart.applyDiscount();
+        }
+
+        if(cart.getTotalPrice()>=2000.0){
+            System.out.println("\nOver $2000. applying 15% discount");
+            cart.setDiscountStrategy(over2000DiscountStrategy);
+            discount = cart.applyDiscount();
+        }
+        System.out.println("Discount: " + discount);
+
+        cart.setTotalPrice(cart.getTotalPrice()-discount);
+        System.out.println("New Cart Price: " + cart.getTotalPrice());
+
+        CartDAO.updateCart(cart);
 
         OrderHistory orderHistory = new OrderHistory();
 
@@ -113,9 +148,9 @@ public class CustomerService {
         orderHistory.setDateTime(dateFormat.format(date));
         orderHistory.setCustomer(customer);
         orderHistory.setPaymentMethod(paymentType);
-        Cart cart = customer.getCart();
         orderHistory.setPrice(cart.getTotalPrice());
         List<OrderItem> orderItems = orderHistory.getOrderItems();
+
 
         List<CartItem> cartItems = CartItemDAO.getCartItemsByCart(cart);
         for(CartItem item:cartItems){
@@ -129,7 +164,6 @@ public class CustomerService {
             OrderItemDAO.addOrderItem(orderItem);
 
             orderItems.add(orderItem);
-
         }
 
         OrderHistoryDAO.addOrderHistory(orderHistory);
@@ -139,13 +173,13 @@ public class CustomerService {
             CartItemDAO.removeCartItem(cartItem);
         cartItems.clear();
         cart.setTotalPrice(0);
+        cart.setDiscountStrategy(null);
         CartDAO.updateCart(cart);
         UserDAO.updateUser(customer);
 
+        String json = gson.toJson(orderHistory);
 
-
-
-        return Response.status(200).build();
+        return Response.status(200).entity(json).build();
     }
 
 

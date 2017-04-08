@@ -1,5 +1,7 @@
 package groupid.model;
 
+import groupid.strategy.DiscountStrategy;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,5 +34,16 @@ public class Cart {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    @Transient
+    public DiscountStrategy discountStrategy;
+
+    public void setDiscountStrategy(DiscountStrategy discountStrategy){
+        this.discountStrategy = discountStrategy;
+    }
+
+    public double applyDiscount(){
+        return discountStrategy.calculateDiscount()*getTotalPrice();
     }
 }

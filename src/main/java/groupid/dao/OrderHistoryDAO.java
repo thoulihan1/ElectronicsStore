@@ -1,6 +1,7 @@
 package groupid.dao;
 
 import groupid.PersistenceUtil;
+import groupid.model.Customer;
 import groupid.model.OrderHistory;
 
 import javax.persistence.EntityManager;
@@ -30,6 +31,12 @@ public class OrderHistoryDAO {
     public static OrderHistory getOrderHistoryById(int id){
         EntityManager em = emf.createEntityManager();
         OrderHistory m = (OrderHistory) em.createNamedQuery("OrderHistory.getById").setParameter("id", id).getSingleResult();
+        return m;
+    }
+
+    public static List<OrderHistory> getOrderHistoryByCustomer(Customer customer){
+        EntityManager em = emf.createEntityManager();
+        List<OrderHistory> m = (List<OrderHistory>) em.createNamedQuery("OrderHistory.getByCustomer").setParameter("customer", customer).getResultList();
         return m;
     }
 

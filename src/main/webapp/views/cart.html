@@ -20,6 +20,10 @@
     </tr>
 </table>
 
+<div ng-show="totalCartPrice>=2000" class="alert alert-success">
+    <strong>You are eligible for a discount!</strong> Purchases over $2000 receive a 15% discount
+</div>
+
 
 Total Price: {{totalCartPrice}}
 
@@ -29,6 +33,9 @@ Total Price: {{totalCartPrice}}
 <button class="btn btn-primary" ng-click="checkout()">Check Out</button>
 <br><hr>
 <b>{{message}}</b>
+${{price}}
+{{method}}
+{{dateTime}}
 <hr>
 
 <div id="payment">

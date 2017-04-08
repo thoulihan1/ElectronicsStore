@@ -80,7 +80,7 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
             console.log(result);
             $scope.cartItems = null;
             $scope.totalCartPrice = null;
-            $scope.message = "Congratulations, purchased!";
+            $scope.message = "Congratulations, purchased!  h " + result.data;
         }, function (error) {
             console.log(error);
             $scope.message = "err0r - " + error;
@@ -112,8 +112,10 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
                 console.log(result);
                 $scope.cartItems = null;
                 $scope.totalCartPrice = null;
-                $scope.message = "Congratulations, purchased!";
-            }, function (error) {
+                $scope.message = "Congratulations, purchased!" ;
+                $scope.price = result.data.price;
+                $scope.dateTime = result.data.dateTime;
+                $scope.method = result.data.paymentMethod;            }, function (error) {
                 console.log(error);
                 $scope.message = "err0r - " + error;
             });
@@ -130,8 +132,10 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
                 console.log(result);
                 $scope.cartItems = null;
                 $scope.totalCartPrice = null;
-                $scope.message = "Congratulations, purchased!";
-            }, function (error) {
+                $scope.message = "Congratulations, purchased!" ;
+                $scope.price = result.data.price;
+                $scope.dateTime = result.data.dateTime;
+                $scope.method = result.data.paymentMethod;            }, function (error) {
                 console.log(error);
                 $scope.message = "err0r - " + error;
             });
@@ -148,7 +152,10 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
                 console.log(result);
                 $scope.cartItems = null;
                 $scope.totalCartPrice = null;
-                $scope.message = "Congratulations, purchased!";
+                $scope.message = "Congratulations, purchased!" ;
+                $scope.price = result.data.price;
+                $scope.dateTime = result.data.dateTime;
+               $scope.method = result.data.paymentMethod;
             }, function (error) {
                 console.log(error);
                 $scope.message = "err0r - " + error;
@@ -166,6 +173,8 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
 
     $scope.pay = function(payType){
         payStrategy(payType);
+        document.getElementById('payment').style.display = 'none';
+
     }
 
 

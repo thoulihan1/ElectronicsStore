@@ -25,7 +25,6 @@ public class ProductService {
         StockItem newStockItem = gson.fromJson(json, StockItem.class);
 
 
-
         Manufacturer m = ManufacturerDAO.getManufacturerById(newStockItem.getManufacturer().getId()+"");
         newStockItem.setManufacturer(m);
 
