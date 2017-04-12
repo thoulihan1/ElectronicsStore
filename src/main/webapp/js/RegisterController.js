@@ -8,9 +8,7 @@ angular.module('app').controller("RegisterController", function ($scope,$http) {
 
     $scope.bop = function() {
         var factory = new UserFactory();
-
         var user;
-
         if (document.getElementById("isAdmin").checked) {
             user = factory.createUser("admin");
         } else {

@@ -2,7 +2,7 @@
  * Created by Thomas on 3/13/17.
  */
 (function(){
-    var app = angular.module('app',['ngRoute', 'ui.bootstrap.modal'])
+    var app = angular.module('app',['ngRoute', 'ui.bootstrap'])
         .config(['$routeProvider', function($routeProvider){
             $routeProvider
                 .when('/',{
@@ -39,6 +39,14 @@
                 .when('/orderHistory',{
                     templateUrl: 'views/orderHistory.html',
                     controller : "OrderHistoryController"
+                })
+                .when('/profile',{
+                    templateUrl: 'views/profile.html',
+                    controller : "ProfileController"
+                })
+                .when('/product/:productId',{
+                    templateUrl: 'views/StockItem.html',
+                    controller : "StockItemController"
                 })
                 .otherwise({redirectTo:'/'});
         }]);

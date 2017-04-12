@@ -7,7 +7,6 @@ import java.util.List;
  * Created by Thomas on 3/13/17.
  */
 
-
 @NamedQueries( {
         @NamedQuery(name = "StockItem.getAll", query = "select o from StockItem o"),
         @NamedQuery(name = "StockItem.getById", query = "select o from StockItem o where o.id=:id"),
@@ -22,7 +21,6 @@ public class StockItem {
     private int id;
 
     private String title;
-
     private double price;
     private String category;
     private String imgUrl;

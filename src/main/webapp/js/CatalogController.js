@@ -11,6 +11,13 @@ angular.module('app').controller("CatalogController", function ($scope,$http, $w
     $rootScope.loggedInUser = $window.localStorage.getItem("loggedInName");
     $rootScope.type = $window.localStorage.getItem("loggedInType");
 
+    $http.get('/newjersey/rest/products/all')
+        .then(function(response){
+            $scope.manProds = response.data;
+        }, function errorCallback(response) {
+            $scope.allProds = "none";
+        });
+
     $http.get('/newjersey/rest/manufacturers/all')
         .then(function(response){
             $scope.manufacturers = response.data;

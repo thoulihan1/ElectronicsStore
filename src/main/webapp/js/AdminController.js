@@ -39,7 +39,7 @@ angular.module('app').controller("AdminController", function ($scope,$http, $roo
         });
     }
 
-    $scope.addProduct = function(newTitle, newManufacturerId, newPrice){
+    $scope.addProduct = function(newTitle, newManufacturerId, newPrice, imageUrl, leftInStock, category){
 
         var newManufacturer = {
             id: newManufacturerId
@@ -48,7 +48,10 @@ angular.module('app').controller("AdminController", function ($scope,$http, $roo
         var product = {
             title: newTitle,
             manufacturer: newManufacturer,
-            price:newPrice
+            price:newPrice,
+            imgUrl:imageUrl,
+            leftInStock:leftInStock,
+            category: category
         }
 
         var json = angular.toJson(product);

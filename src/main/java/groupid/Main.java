@@ -1,40 +1,66 @@
 package groupid;
 
-import com.google.gson.Gson;
-import com.mysql.cj.mysqlx.protobuf.MysqlxCrud;
 import groupid.dao.*;
 import groupid.model.*;
 
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Thomas on 3/13/17.
  */
 public class Main {
+/*
+    public static void main(String[] args){
+        Customer c = UserDAO.getCustomerById(Integer.parseInt("9"));
 
-    public static void main(String[] args) {
+        StockItem item = StockItemDAO.getStockItemById(Integer.parseInt("2"));
 
-        Hello.LogInChain loginAsAdmin = new Hello.LoginAsAdmin();
-        Hello.LogInChain loginAsCustomer = new Hello.LoginAsCustomer();
+        int quantity = 1;
 
-        loginAsAdmin.setNextChain(loginAsCustomer);
+        System.out.println(String.valueOf(isProductInCart(item, c)));
 
-Gson gson = new Gson();
+        if(isProductInCart(item, c)){
+            CartItem cartItem = CartItemDAO.getCartItemByCartAndStockItem(c.getCart(), item);
+            System.out.println(cartItem.getStockITem().getTitle() + " is in the cart");
 
-        User u = loginAsAdmin.login("t@gmail.com", "pass");
-
-        System.out.println(u.getName());
-        if (u != null) {
-            String json = gson.toJson(u);
-            System.out.println("users not null");
+            c.getCart().setTotalPrice(c.getCart().getTotalPrice()+(quantity*item.getPrice()));
+            CartDAO.updateCart(c.getCart());
+            cartItem.setQuantity(cartItem.getQuantity()+quantity);
+            CartItemDAO.updateCartItem(cartItem);
         } else {
-            System.out.println("users null");
+            addNewToCart(c, item, quantity);
         }
     }
+
+    public static boolean isProductInCart(StockItem item, Customer c){
+        boolean isInCart = false;
+        List<CartItem> cartItems = CartItemDAO.getCartItemsByCart(c.getCart());
+        Iterator cartItemIterator = new CartItemIterator(cartItems);
+        while (cartItemIterator.hasNext()) {
+            CartItem current = cartItemIterator.next();
+            if (current.getStockITem().getId() == item.getId()) {
+                isInCart = true;
+            }
+        }
+        return isInCart;
+    }
+
+    public static void addNewToCart(Customer c, StockItem item, int quantity){
+        System.out.println("Adding to basket.");
+        c.getCart().setTotalPrice(c.getCart().getTotalPrice() + (quantity * item.getPrice()));
+        CartDAO.updateCart(c.getCart());
+        CartItem newCartItem = new CartItem(c.getCart(), item, quantity);
+        CartItemDAO.addCartItem(newCartItem);
+        System.out.println(item.getId());
+    }
+
+*/
+
 
 
 }

@@ -201,4 +201,5 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
 
         alert(" " + payment.pay());
     }
+
 });

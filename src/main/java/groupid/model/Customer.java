@@ -41,6 +41,8 @@ public class Customer extends User implements Observer {
 
     private boolean isSubscribed;
 
+    private String paymentType;
+
     @Transient
     private Topic topic;
 
@@ -56,5 +58,13 @@ public class Customer extends User implements Observer {
 
     public void setSubscribed(boolean subscribed) {
         isSubscribed = subscribed;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
 }
