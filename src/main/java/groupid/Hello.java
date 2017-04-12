@@ -14,25 +14,32 @@ public class Hello {
     Gson gson = new Gson();
 
 
+
     @GET
     @Path("/login")
     public Response login(@QueryParam("email") String email, @QueryParam("password") String password) {
+
         LogInChain loginAsAdmin = new LoginAsAdmin();
         LogInChain loginAsCustomer = new LoginAsCustomer();
 
+        //loginAsAdmin is the first of the chain, next is loginAsCustomer
         loginAsAdmin.setNextChain(loginAsCustomer);
 
+        //call login() as admin (if this doesnt work, it will call login() as customer).
         User u = loginAsAdmin.login(email, password);
 
-        if (u != null) {
+
+        if (u != null) { //if there is a user with the given details
             String json = gson.toJson(u);
             return Response.status(200).entity(json).build();
-        } else {
+        } else { //there is no such user - login failed.
             return Response.status(401).build();
         }
     }
 
+    //interface to be implemented by each class in the chain
     public interface LogInChain{
+        //if login() doest work, add the next class to try in.
         public void setNextChain(LogInChain nextInChain);
         public User login(String email, String password);
     }

@@ -5,8 +5,7 @@
 angular.module('app').controller("RegisterController", function ($scope,$http) {
 
 
-
-    $scope.bop = function() {
+    $scope.reg = function() {
         var factory = new UserFactory();
         var user;
         if (document.getElementById("isAdmin").checked) {

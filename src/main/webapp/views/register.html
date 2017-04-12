@@ -4,14 +4,16 @@
     <input type="text" class="form-control h" ng-model="newName" placeholder="Name"/><br>
     <input type="text" class="form-control h" ng-model="newEmail" placeholder="Email"/><br>
     <input type="text" class="form-control h" ng-model="newPassword" placeholder="Password"/>
+    <input type="text" class="form-control h" ng-model="confirmPassword" placeholder="Confirm Password"/>
     <br>
+    <div ng-show="type=='Admin'">
     Admin<input type="checkbox" id="isAdmin"/>
-    <br>
+    </div><br>
 
     <br>
     {{msg}}
 
-    <button ng-click="bop()">Create</button>
+    <button ng-click="reg()">Create</button>
 </center>
 </div>
 

@@ -11,6 +11,7 @@ import java.util.List;
         @NamedQuery(name = "StockItem.getAll", query = "select o from StockItem o"),
         @NamedQuery(name = "StockItem.getById", query = "select o from StockItem o where o.id=:id"),
         @NamedQuery(name = "StockItem.getByManufacturer", query = "select o from StockItem o where o.manufacturer=:manufacturer"),
+        @NamedQuery(name = "StockItem.getByCategory", query = "select o from StockItem o where o.category=:category"),
 })
 
 @Entity

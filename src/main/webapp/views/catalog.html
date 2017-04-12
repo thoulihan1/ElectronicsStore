@@ -1,29 +1,28 @@
 <div xmlns:ng="http://www.w3.org/1999/xhtml">
     <div class="text-center">
-    <button ng-click="getAllProducts()" class="btn btn-primary">All Products</button>
+    <button ng-click="getAllProducts()" class="btn btn-primary">Show All Products</button>
     </div>
     <br>
-<!--
-    <ol>
-    <li ng-repeat = "stockItem in stockItems">
-        {{stockItem.title}},{{stockItem.manufacturer.name}},${{stockItem.price}},{{stockItem.leftInStock}}
-    </li>
-</ol>
--->
+
     <form class="form-inline" role="form">
-<center>
-    <select class="form-control" ng-model="selectedManufacturer"
-        ng-options="item.id as item.name for item in manufacturers">
-    <option value="" disabled>Select Manufacturer</option>
-
-</select>
-
-<button class="btn btn-primary" ng-click="manufacturersProducts(selectedManufacturer)">Show</button>
-</center>
+        <center>
+            <select class="form-control" ng-model="selectedManufacturer" ng-options="item.id as item.name for item in manufacturers">
+                <option value="" disabled>Select Manufacturer</option>
+            </select>
+            <button class="btn btn-primary" ng-click="manufacturersProducts(selectedManufacturer)">Show</button>
+        </center>
     </form>
 
- <hr>
+    <form class="form-inline" role="form">
+        <center>
+            <select class="form-control" ng-model="selectedCategory" ng-options="items as items for items in cats">
+                <option value="" disabled>Select Category</option>
+            </select>
+            <button class="btn btn-primary" ng-click="showItemsByCategory(selectedCategory)">Show</button></center>
+    </form>
 
+    <center><h3>{{searching}}</h3></center>
+ <hr>
     <form class="center_div">
         <div class="form-group">
             <div class="input-group">
@@ -33,18 +32,18 @@
         </div>
     </form>
 
-
 <table class="table table-hover"  width="80%">
     <thead>
     <tr>
         <th>Image</th>
+        <th>Category</th>
         <th><a href="" ng-click="sortType = 'title'; sortReverse = !sortReverse">Title
             <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-up"></span>
         </a></th>
-        <th><a href="" ng-click="sortType = 'manufacturer'; sortReverse = !sortReverse">Manufacturer
-            <span ng-show="sortType == 'manufacturer' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'manufacturer' && sortReverse" class="fa fa-caret-up"></span>
+        <th><a href="" ng-click="sortType = 'manufacturer.name'; sortReverse = !sortReverse">Manufacturer
+            <span ng-show="sortType == 'manufacturer.name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'manufacturer.name' && sortReverse" class="fa fa-caret-up"></span>
         </a></th>
         <th><a href="" ng-click="sortType = 'price'; sortReverse = !sortReverse">Price
             <span ng-show="sortType == 'price' && !sortReverse" class="fa fa-caret-down"></span>
@@ -60,6 +59,7 @@
     </thead>
     <tr ng-repeat = "stockItem in manProds | orderBy:sortType:sortReverse | filter:search" >
         <td><img height="50" ng-src="{{stockItem.imgUrl}}"/></td>
+        <td>{{stockItem.category}}</td>
         <td><a href="#/product/{{stockItem.id}}">{{stockItem.title}}</a></td>
         <td>{{stockItem.manufacturer.name}}</td>
         <td>{{stockItem.price}}</td>

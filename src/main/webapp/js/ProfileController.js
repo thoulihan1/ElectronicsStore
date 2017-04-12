@@ -102,14 +102,12 @@ var ModalInstanceCtrl = function($scope, $http, $rootScope, $window, $modalInsta
         reviewText:""
     };
 
-
-
     $scope.ok = function () {
         $http.get('/newjersey/rest/products/' + item.id + "/review?customerId=" + loggedInId + '&review=' + $scope.data.reviewText + "&rating=" + $scope.data.ratingNumber)
             .then(function (response) {
 
                 $modalInstance.close();
-                alert(response)
+                alert(response.data)
                 return "ok";
             }, function errorCallback(response) {
                 $scope.resp = "error";

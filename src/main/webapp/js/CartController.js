@@ -26,6 +26,27 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
             $scope.allProds = "none";
         });
 
+    $http.get('/newjersey/rest/customers/'+id)
+        .then(function(response){
+            if(response.data.paymentType==null){
+                $scope.paymentMethod = "none";
+            } else
+                $scope.paymentMethod = response.data.paymentType;
+        }, function errorCallback(response) {
+            $scope.paymentMethod = "none";
+        });
+
+    $http.get('/newjersey/rest/customers/'+id+ '/purchase_history')
+        .then(function(response){
+
+            if(response.data.length>0){
+                $scope.firstTimeDiscount = false;
+            } else
+                $scope.firstTimeDiscount = true;
+        }, function errorCallback(response) {
+            $scope.allProds = "none";
+        });
+
     $scope.removeItemFromCart = function(cartItemId){
         $http({
             method: 'POST',
@@ -72,6 +93,7 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
         });
     }
 
+    /*
     $scope.purchase = function(){
         $http({
             method: 'POST',
@@ -80,12 +102,14 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
             console.log(result);
             $scope.cartItems = null;
             $scope.totalCartPrice = null;
-            $scope.message = "Congratulations, purchased!  h " + result.data;
+            $scope.message = "Congratulations, purchased!  " + result.data;
+            $scope.firstTimeDiscount = false;
         }, function (error) {
             console.log(error);
             $scope.message = "err0r - " + error;
         });
     }
+    */
 
 
 
@@ -115,7 +139,8 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
                 $scope.message = "Congratulations, purchased!" ;
                 $scope.price = result.data.price;
                 $scope.dateTime = result.data.dateTime;
-                $scope.method = result.data.paymentMethod;            }, function (error) {
+                $scope.method = result.data.paymentMethod;
+            }, function (error) {
                 console.log(error);
                 $scope.message = "err0r - " + error;
             });
@@ -164,17 +189,16 @@ angular.module('app').controller("CartController", function ($scope,$http, $wind
         }
     };
 
-// log helper
-
 
     $scope.checkout = function(){
         document.getElementById('payment').style.display = 'block';
+
+
     }
 
-    $scope.pay = function(payType){
-        payStrategy(payType);
+    $scope.pay = function(){
         document.getElementById('payment').style.display = 'none';
-
+        payStrategy($scope.paymentMethod);
     }
 
 

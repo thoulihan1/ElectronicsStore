@@ -1,8 +1,5 @@
 <div>
-
     <hr>
-
-
     <table class="table table-hover bop"  width="80%">
         <tr>
             <th>Customer</th>
@@ -11,22 +8,21 @@
             <th>Payment Method</th>
         </tr>
     </table>
-
-    <table ng-repeat = "history in orderHistory" class="table table-hover bop"  width="80%">
-
-        <tr bgcolor="#fffacd">
+    <table ng-repeat = "history in orderHistory" class="table table-hover bop"  width="40%">
+        <tr bgcolor="#B2FFB2" class="trBorderTop">
         <td>{{history.customer.email}}</td>
         <td>{{history.dateTime}}</td>
         <td>{{history.price}}</td>
         <td>{{history.paymentMethod}}</td>
-        <tr ng-repeat = "items in history.orderItems">
-            <td>{{items.stockItem.manufacturer.name}} {{items.stockItem.title}} x {{items.quantity}}</td><td></td><td></td></tr>
+        <tr bgcolor="#fffacd" ng-repeat = "items in history.orderItems" class="trBorderBottom">
+            <td colspan="4">{{items.stockItem.manufacturer.name}} {{items.stockItem.title}} ({{items.quantity}})</td></tr>
         </tr>
         <br><br>
     </table>
 
     <hr>
-    <style>
+
+        <style>
         .table {
             border-radius: 5px;
             width: 70%;
@@ -34,6 +30,19 @@
             float: none;
         }
 
+        .trBorderTop{
+            border-top: solid;
+            border-left: solid;
+            border-right: solid;
+            border-bottom: solid;
+        }
+
+        .trBorderBottom{
+            border-bottom: groove;
+            border-top: groove;
+            border-left: groove;
+            border-right: groove;
+        }
         .center_div{
             margin: 0 auto;
             width:30%;
@@ -41,7 +50,17 @@
 
         .bop{
             margin-bottom: 50px;
+
         }
+
+        .toTheSide{
+            margin-left: 300px;
+        }
+
+        body {
+
+        }
+
 
         td { width: 20%; }
         th {width: 20%;}

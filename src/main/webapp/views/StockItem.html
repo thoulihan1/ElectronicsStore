@@ -8,9 +8,10 @@
 <body>
 <center>
 <h1>{{stockItem}} Reviews</h1>
+
+    <div  ng-hide="reviews.length > 0"><h3>No Reviews</h3></div>
+
 </center>
-
-
 
     <table  align="center" ng-repeat = "review in reviews" class="table table-hover bop"  width="80%">
 

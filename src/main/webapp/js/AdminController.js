@@ -15,7 +15,6 @@ angular.module('app').controller("AdminController", function ($scope,$http, $roo
             $scope.allProds = "none";
         });
 
-
     $scope.addManufacturer = function(){
         var manufacturerToCreate = {
             name: $scope.newManufacturer,
@@ -33,6 +32,12 @@ angular.module('app').controller("AdminController", function ($scope,$http, $roo
             console.log(result);
             $scope.manufacturerMsg =  manufacturerToCreate.name + " added successfully!";
             $scope.newManufacturer = null;
+            $http.get('/newjersey/rest/manufacturers/all')
+                .then(function(response){
+                    $scope.manufacturers = response.data;
+                }, function errorCallback(response) {
+                    $scope.allProds = "none";
+                });
         }, function (error) {
             console.log(error);
             $scope.manufacturerMsg = "err0r - " + error;

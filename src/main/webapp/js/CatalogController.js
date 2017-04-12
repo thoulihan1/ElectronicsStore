@@ -11,9 +11,24 @@ angular.module('app').controller("CatalogController", function ($scope,$http, $w
     $rootScope.loggedInUser = $window.localStorage.getItem("loggedInName");
     $rootScope.type = $window.localStorage.getItem("loggedInType");
 
+    var categories = [];
+
     $http.get('/newjersey/rest/products/all')
         .then(function(response){
             $scope.manProds = response.data;
+            $scope.searching = 'All products';
+
+            var arrLength = $scope.manProds.length;
+            for(var i = 0; i< arrLength; i++){
+                categories.push($scope.manProds[i].category);
+            }
+
+            categories = categories.filter( function( item, index, inputArray ) {
+                return inputArray.indexOf(item) == index;
+            });
+
+            $scope.cats = categories;
+
         }, function errorCallback(response) {
             $scope.allProds = "none";
         });
@@ -21,6 +36,7 @@ angular.module('app').controller("CatalogController", function ($scope,$http, $w
     $http.get('/newjersey/rest/manufacturers/all')
         .then(function(response){
             $scope.manufacturers = response.data;
+
         }, function errorCallback(response) {
             $scope.allProds = "none";
         });
@@ -33,6 +49,10 @@ angular.module('app').controller("CatalogController", function ($scope,$http, $w
         $http.get('/newjersey/rest/products/all')
             .then(function(response){
                 $scope.manProds = response.data;
+                $scope.selectedManufacturer = '';
+                $scope.selectedCategory = '';
+                $scope.searching = "All products";
+
             }, function errorCallback(response) {
                 $scope.allProds = "none";
             });
@@ -41,10 +61,27 @@ angular.module('app').controller("CatalogController", function ($scope,$http, $w
     $scope.manufacturersProducts = function(id){
         $http.get('/newjersey/rest/manufacturers/'+id+'/products/all')
             .then(function(response){
+                $scope.selectedCategory = '';
+
                 $scope.manProds = response.data;
+                $scope.searching = "Searching by Manufacturer - " + response.data[0].manufacturer.name;
             }, function errorCallback(response) {
                 $scope.allProds = "none";
             });
+    }
+
+    $scope.showItemsByCategory = function(category){
+
+        $http.get('/newjersey/rest/products/'+category)
+            .then(function(response){
+                $scope.manProds = response.data;
+                $scope.selectedManufacturer = '';
+                $scope.searching = "Searching by Category - " + category;
+
+            }, function errorCallback(response) {
+                $scope.allProds = "none";
+            });
+
     }
 
     $scope.addItemToCart = function(stockItemId, quant){
@@ -78,8 +115,9 @@ angular.module('app').controller("CatalogController", function ($scope,$http, $w
             });
     }
 
-    $scope.sortType     = 'name'; // set the default sort type
-    $scope.sortReverse  = false;  // set the default sort order
+    $scope.sortType     = 'title';
+    $scope.sortReverse  = false;
+    $scope.search = '';
 
     $scope.changeStockQuantity = function(stockItemId, stockQuantity){
 

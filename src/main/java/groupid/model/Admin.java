@@ -1,5 +1,8 @@
 package groupid.model;
 
+import groupid.observer.Observer;
+import groupid.observer.Topic;
+
 import javax.persistence.*;
 
 /**
@@ -15,5 +18,7 @@ import javax.persistence.*;
 
 @Entity
 public class Admin extends User{
+
+
 
 }

@@ -133,8 +133,6 @@ public class CustomerService {
 
         Cart cart = customer.getCart();
 
-
-
         List<OrderHistory> purchaseHistory = OrderHistoryDAO.getOrderHistoryByCustomer(customer);
         System.out.println("Previous purchases: " + purchaseHistory.size());
 

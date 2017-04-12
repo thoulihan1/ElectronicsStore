@@ -39,6 +39,17 @@ public class ProductService {
     }
 
     @GET
+    @Path("/{category}")
+    public String getAllProductsByCategory(@PathParam("category")String cat) {
+        List<StockItem> allStockItems = StockItemDAO.getStockItemByCategory(cat);
+
+        Gson gson = new Gson();
+
+        String json = gson.toJson(allStockItems);
+        return json;
+    }
+
+    @GET
     @Path("/all")
     public String getAllProducts() {
         List<StockItem> allStockItems = StockItemDAO.getAllStockItems();

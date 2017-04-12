@@ -21,11 +21,13 @@
 </table>
 
 
+<div ng-show="firstTimeDiscount && totalCartPrice<=2000" class="alert alert-success">
+    <strong>You are eligible for a discount!</strong> New users get 10% off their first purchase!
+</div>
 
 <div ng-show="totalCartPrice>=2000" class="alert alert-success">
     <strong>You are eligible for a discount!</strong> Purchases over $2000 receive a 15% discount
 </div>
-
 
 Total Price: {{totalCartPrice}}
 
@@ -41,6 +43,7 @@ ${{price}}
 <hr>
 
 <div id="payment">
+    <!--
     <form class="form-inline" role="form">
         <center>
             <select class="form-control" ng-model="payType">
@@ -49,7 +52,12 @@ ${{price}}
                 <option value="Debit">Debit</option>
                 <option value="Stripe">Stripe</option>
             </select>
-            <button class="btn btn-primary" ng-click="pay(payType)">Pay</button>
+
         </center>
+
     </form>
+-->
+    <center><h5>Payment Method: <h3>{{paymentMethod}}</h3> (if you want to change this, go to your Profile)</h5>
+    <button class="btn btn-primary" ng-click="pay()">Pay</button></center>
+
 </div>

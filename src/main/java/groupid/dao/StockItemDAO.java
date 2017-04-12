@@ -43,6 +43,12 @@ public class StockItemDAO {
         return stockItems;
     }
 
+    public static List<StockItem> getStockItemByCategory(String cat){
+        EntityManager em = emf.createEntityManager();
+        List<StockItem> stockItems = (List<StockItem>) em.createNamedQuery("StockItem.getByCategory").setParameter("category", cat).getResultList();
+        return stockItems;
+    }
+
     public static List<StockItem> getAllStockItems(){
         EntityManager em = emf.createEntityManager();
         List<StockItem> m = (List<StockItem>) em.createNamedQuery("StockItem.getAll").getResultList();

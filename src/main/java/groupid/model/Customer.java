@@ -29,7 +29,6 @@ public class Customer extends User implements Observer {
     @OneToOne
     private Cart cart;
 
-
     public Customer() {
     }
     public Cart getCart() {
@@ -52,7 +51,11 @@ public class Customer extends User implements Observer {
     }
 
     public void update(StockItem stockItem) {
-        //Send email or text
+        System.out.print("\nHi " + this.getName() + ", " + stockItem.getTitle() + " has now been added to our catalog!");
+
+        //SMPT to this.getEmail();
+        //SMPT.setMessage(stockItem.getTitle() has now been added to our catalog.....)
+        System.out.print("Sending Email");
         System.out.print("\nHi " + this.getName() + ", " + stockItem.getTitle() + " has now been added to our catalog!");
     }
 
