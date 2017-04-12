@@ -4,6 +4,7 @@ import groupid.PersistenceUtil;
 import groupid.model.Cart;
 import groupid.model.Manufacturer;
 import groupid.model.CartItem;
+import groupid.model.StockItem;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -40,6 +41,12 @@ public class CartItemDAO {
     public static List<CartItem> getCartItemsByCart(Cart cart){
         EntityManager em = emf.createEntityManager();
         List<CartItem> m = (List<CartItem>) em.createNamedQuery("CartItem.getByCart").setParameter("cart", cart).getResultList();
+        return m;
+    }
+
+    public static CartItem getCartItemByCartAndStockItem(Cart cart, StockItem stockItem){
+        EntityManager em = emf.createEntityManager();
+        CartItem m = (CartItem) em.createNamedQuery("CartItem.getCartItemByCartAndStockItem").setParameter("cart", cart).setParameter("stockItem", stockItem).getSingleResult();
         return m;
     }
 

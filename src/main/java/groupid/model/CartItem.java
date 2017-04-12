@@ -10,6 +10,7 @@ import javax.persistence.*;
         @NamedQuery(name = "CartItem.getAll", query = "select o from CartItem o"),
         @NamedQuery(name = "CartItem.getById", query = "select o from CartItem o where o.id=:id"),
         @NamedQuery(name = "CartItem.getByCart", query = "select o from CartItem o where o.cart=:cart"),
+        @NamedQuery(name = "CartItem.getCartItemByCartAndStockItem", query = "select o from CartItem o where o.cart=:cart and o.stockItem=:stockItem"),
 })
 
 @Entity
