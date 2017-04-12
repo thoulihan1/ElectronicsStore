@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<center>
+<h1>{{stockItem}} Reviews</h1>
+</center>
+
+
+
+    <table  align="center" ng-repeat = "review in reviews" class="table table-hover bop"  width="80%">
+
+        <tr bgcolor="#fffacd">
+            <td>{{review.customer.name}}</td>
+            <td>{{review.rating}}/10</td>
+
+        <tr><td>"{{review.review}}"</td><td></td>
+    </tr>
+    </tr>
+        </tr>
+        <br><br>
+    </table>
+
+
+</body>
+</html>
+
+<style>
+
+    .bop{
+        width: 50%;
+        alignment: center;
+    }
+</style>

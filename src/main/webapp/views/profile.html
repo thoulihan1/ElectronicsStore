@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    </head>
+<body>
+
+    <button ng-click="showModal('iphones')">Click Me</button>
+
+{{dialog}}
+<div class="tealBack">
+<center><h1>Edit Profile</h1></center>
+<center>
+    <div ng-show="isSubscribed"><h5>You are subscribed to receive emails about new products</h5>
+    <button  class="btn btn-primary" ng-click="unsubscribe()">Unsubscribe</button>
+
+</div>
+    <div ng-show="!isSubscribed"><h5>You are not subscribed to receive emails about new products</h5>
+    <button class="btn btn-primary" ng-click="subscribe()">Subscribe</button>
+
+</div>
+</center>
+{{resp}}
+
+    <hr>
+    <br><br>
+    <center>
+    <h2>Payment Method</h2>
+
+    <form name="myForm">
+        <label>
+            <input type="radio" ng-model="method" value="PayPal">
+            PayPal
+        </label><br/>
+        <label>
+            <input type="radio" ng-model="method" value="Debit">
+            Debit
+        </label><br/>
+        <label>
+            <input type="radio" ng-model="method" value="Stripe">
+            Stripe
+        </label><br/>
+        <button class="btn btn-primary" ng-click="submitPaymentType()">Save Changes</button>
+    </form>
+    </center>
+    {{theMethod}}
+
+
+<br><br>
+<h2 class="toTheSide">Your Purchase History</h2>
+
+
+
+
+
+
+<table class="table table-hover"  width="40%">
+    <tr>
+        <th>Date</th>
+        <th>Total Cost</th>
+        <th>Payment Method</th>
+    </tr>
+</table>
+
+<table ng-repeat = "history in orderHistory" class="table table-hover bop"  width="40%">
+    <tr bgcolor="#B2FFB2" class="trBorderTop">
+        <td>{{history.dateTime}}</td>
+        <td>${{history.price}}</td>
+        <td>{{history.paymentMethod}}</td>
+            <tr  bgcolor="#fffacd" ng-repeat = "items in history.orderItems" class="trBorderBottom">
+                <td>
+                    {{items.stockItem.manufacturer.name}} {{items.stockItem.title}} ({{items.quantity}})</td><td> <a ng-click="showModal(items.stockItem.title, items.stockItem.id)"><span class="glyphicon glyphicon-thumbs-up"></span>   </a></td><td></td></tr>
+    </tr>
+    <br><br>
+</table>
+</div>
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3>I'm a modal!</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a ng-click="selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ selected.item }}</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+</body>
+</html>
+
+<style>
+    .table {
+        border-radius: 5px;
+        width: 70%;
+        margin: 0px auto;
+        float: none;
+    }
+
+    .trBorderTop{
+        border-top: solid;
+        border-left: solid;
+        border-right: solid;
+        border-bottom: solid;
+    }
+
+    .trBorderBottom{
+        border-bottom: groove;
+        border-top: groove;
+        border-left: groove;
+        border-right: groove;
+    }
+    .center_div{
+        margin: 0 auto;
+        width:30%;
+    }
+
+    .bop{
+        margin-bottom: 50px;
+        padding-bottom: 20px;
+    }
+
+    .toTheSide{
+        margin-left: 300px;
+    }
+
+    body {
+
+    }
+
+
+    td { width: 20%; }
+    th {width: 20%;}
+</style>

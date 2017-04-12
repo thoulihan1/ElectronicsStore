@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <center><h1>Rate {{item.name}} ID {{item.id}}</h1></center>
+</div>
+<center>
+<input type="number" placeholder="1-10" max="10" ng-model="data.ratingNumber"/>
+
+<br><br>
+    <textarea class="form-control" name="review" cols="15" rows="7" ng-model="data.reviewText"></textarea></center>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
